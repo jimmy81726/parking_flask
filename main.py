@@ -16,11 +16,6 @@ CREATE TABLE IF NOT EXISTS user_comment(
 )
 """
 
-conn = sqlite3.connect("comment_db")
-cursor = conn.cursor()
-cursor.execute(sqlstr)
-conn.commit()
-
 
 @app.route("/")
 def index():
@@ -38,7 +33,7 @@ def get_usercomment():
         creation_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         # 连接到数据库
-        conn = sqlite3.connect("comment_db")
+        conn = sqlite3.connect("comment_db.db")
         cursor = conn.cursor()
 
         # 插入数据到数据库
