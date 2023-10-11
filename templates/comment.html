@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>停車場用戶評論</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+
+</head>
+
+<body>
+    <section class="hero is-small is-primary">
+        <div class="hero-body">
+            <p class="title">
+                停車場用戶評論
+            </p>
+        </div>
+    </section>
+
+
+    <form class="box" action="{{url_for('get_usercomment')}}" method="post">
+        <label class="label" for="name">姓名:</label>
+        <input class="input is-small" type="text" id="name" name="name" required><br>
+        <label class="label" for="phone">電話:</label>
+        <input class="input is-small" type="tel" id="phone" name="phone" required><br>
+        <label class="label" for="email">電子郵件:</label>
+        <input class="input is-danger is-small" placeholder="Email input" value="e.g. alex@example.com" type="email"
+            id="email" name="email" required><br>
+        <div class="field">
+            <label class="label">選擇評論停車站</label>
+            <div class="control">
+                <div class="select is-normal">
+                    <select name="parking" id="parking">
+                        <option value="{}">停車站1</option>
+                    </select><br>
+                </div>
+            </div>
+        </div>
+        <label for="comment">評論:</label>
+        <textarea class="textarea is-success" placeholder="不超過50字" name="comment" id="comment" cols="30"
+            rows="10"></textarea><br>
+        <button class="button is-link is-small" type="submit">提交</button> <button class="button is-warning is-small"
+            is-smalltype="reset">清空</button>
+    </form><br>
+    <a href="/">回首頁</a>
+</body>
+
+</html>
