@@ -1,20 +1,9 @@
 from flask import Flask, render_template, request
-import sqlite3
 from datetime import datetime
+from user_commentdb import write_db, show_comments, create_commentdb
+from parking import get_parkinginfo
 
 app = Flask(__name__)
-
-sqlstr = """
-CREATE TABLE IF NOT EXISTS user_comment(
-                   id INTEGER PRIMARY KEY,
-                   name TEXT,
-                   phone TEXT,
-                   email TEXT,
-                   park_site TEXT,
-                   comment TEXT,
-                   datacreationdate DATETIME
-)
-"""
 
 
 @app.route("/")
@@ -31,20 +20,20 @@ def get_usercomment():
         parking = request.form["parking"]
         comment = request.form["comment"]
         creation_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        write_db(name, phone, email, parking, comment, creation_date)
+    comments = show_comments()
+    return render_template("./comment.html", comments=comments)
 
-        # 连接到数据库
-        conn = sqlite3.connect("comment_db.db")
-        cursor = conn.cursor()
 
-        # 插入数据到数据库
-        cursor.execute(
-            "INSERT INTO user_comment (name, phone, email, park_site, comment, datacreationdate) VALUES (?, ?, ?, ?, ?, ?)",
-            (name, phone, email, parking, comment, creation_date),
-        )
-        conn.commit()
-        conn.close()
-    return render_template("./comment.html")
+@app.route("/parkinginfo", methods=["GET", "POST"])
+def show_parkinginfo():
+    if request.method == "GET":
+        all_values, columns = get_parkinginfo()
+    if request.method == "POST":
+        all_values, columns = get_parkinginfo()
+    return render_template("./parkinginfo.html", **locals())
 
 
 if __name__ == "__main__":
+    create_commentdb()
     app.run(debug=True)

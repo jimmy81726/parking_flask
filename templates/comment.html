@@ -19,7 +19,7 @@
     </section>
 
 
-    <form class="box" action="{{url_for('get_usercomment')}}" method="post">
+    <form id="form" class="box" action="" method="post">
         <label class="label" for="name">姓名:</label>
         <input class="input is-small" type="text" id="name" name="name" required><br>
         <label class="label" for="phone">電話:</label>
@@ -43,6 +43,19 @@
         <button class="button is-link is-small" type="submit">提交</button> <button class="button is-warning is-small"
             is-smalltype="reset">清空</button>
     </form><br>
+    <h2>評論:</h2>
+    <ul>
+        {% for comment in comments %}
+        <li>
+            <strong>姓名:</strong> {{ comment[1] }}<br>
+            <strong>停車站:</strong> {{ comment[4] }}<br>
+            <strong>評論:</strong> {{ comment[5] }}<br>
+            <strong>評論時間:</strong> {{ comment[6] }}<br>
+            <br>
+        </li>
+        {% endfor %}
+    </ul>
+
     <a href="/">回首頁</a>
 </body>
 
