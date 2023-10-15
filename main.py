@@ -30,7 +30,12 @@ def show_parkinginfo():
     if request.method == "GET":
         all_values, columns = get_parkinginfo()
     if request.method == "POST":
-        all_values, columns = get_parkinginfo()
+        if request.form.get("sort") == "carspace":
+            all_values, columns = get_parkinginfo(1)
+        elif request.form.get("sort") == "motspace":
+            all_values, columns = get_parkinginfo(2)
+        else:
+            all_values, columns = get_parkinginfo()
     return render_template("./parkinginfo.html", **locals())
 
 

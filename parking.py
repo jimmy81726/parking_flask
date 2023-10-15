@@ -1,7 +1,8 @@
 import requests
+from datetime import datetime
 
 
-def get_parkinginfo():
+def get_parkinginfo(sort=None):
     url = "https://hispark.hccg.gov.tw/OpenData/GetParkInfo"
     resp = requests.get(url)
     datas = resp.json()
@@ -13,8 +14,18 @@ def get_parkinginfo():
     for value in values:
         eachpark_list = []
         for i in numbers:
-            eachpark_list.append(value[i])
+            if i == 20:
+                time_str = value[i].split(".")
+                time = time_str[0]
+                time = datetime.strptime(time, "%Y-%m-%dT%H:%M:%S")
+                eachpark_list.append(time)
+            else:
+                eachpark_list.append(value[i])
         all_values.append(eachpark_list)
+    if sort == 1:
+        all_values = sorted(all_values, key=lambda x: x[5], reverse=True)
+    elif sort == 2:
+        all_values = sorted(all_values, key=lambda x: x[7], reverse=True)
     columns = [
         "停車場名",
         "地址",

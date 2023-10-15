@@ -10,8 +10,19 @@
 
 <body>
     <a href="/">回首頁</a><br><br>
-
+    <form action="" method="post">
+        <label for="sort">選擇排序方式(由高到低):</label>
+        <select name="sort" id="sort">
+            <option value="carspace">汽車剩餘車位</option>
+            <option value="motspace">機車剩餘車位</option>
+        </select>
+        <button type="submit">更新</button>
+    </form><br><br>
+    <span id="clock"></span>
     <div style="max-width: 80%; margin: 0 auto; text-align: center;">
+
+        <script></script>
+        <h1>每分鐘更新一次</h1>
         <table class="table is-bordered">
             <thead>
                 <tr>
@@ -33,7 +44,7 @@
             </tbody>
         </table>
     </div>
-
+    <script src="../static/main.js"></script>
 </body>
 
 </html>
