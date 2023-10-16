@@ -10,13 +10,14 @@
 
 <body>
     <a href="/">回首頁</a><br><br>
-    <form action="" method="post">
+    <form action="" method="post" id="sorting-form">
         <label for="sort">選擇排序方式(由高到低):</label>
         <select name="sort" id="sort">
-            <option value="carspace">汽車剩餘車位</option>
-            <option value="motspace">機車剩餘車位</option>
+            <option value="" selected>請選擇..</option>
+            <option value="carspace" {% if request.form.get('sort')=="carspace" %}selected{% endif %}>汽車剩餘車位</option>
+            <option value="motspace" {% if request.form.get('sort')=="motspace" %}selected{% endif %}>機車剩餘車位</option>
         </select>
-        <button type="submit">更新</button>
+        <!-- <button type="submit">更新</button> -->
     </form><br><br>
     <span id="clock"></span>
     <div style="max-width: 80%; margin: 0 auto; text-align: center;">
@@ -27,7 +28,13 @@
             <thead>
                 <tr>
                     {% for column in columns %}
+                    {% if request.form.get('sort')=="carspace" and loop.index==6 %}
+                    <th style="color: red;font-weight: bolder;font-style: italic;">{{column}}</th>
+                    {% elif request.form.get('sort')=="motspace" and loop.index==8 %}
+                    <th style="color: red;font-weight: bolder;font-style: italic;">{{column}}</th>
+                    {% else %}
                     <th>{{column}}</th>
+                    {% endif%}
                     {% endfor %}
                 </tr>
             </thead>
@@ -36,7 +43,12 @@
                 <tr>
                     {% for data in eachdata %}
                     <td>
+                        {% if loop.index==2 %}
+                        <a href="https://www.google.com/maps/search/{{data}}" target="_blank">{{data}}</a>
+                        {% else %}
                         {{data}}
+                        {% endif %}
+
                     </td>
                     {% endfor %}
                 </tr>

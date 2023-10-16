@@ -32,7 +32,9 @@
             <div class="control">
                 <div class="select is-normal">
                     <select name="parking" id="parking">
-                        <option value="{}">停車站1</option>
+                        {% for value in all_values%}
+                        <option value="{{ value[0]}}">{{value[0]}}</option>
+                        {% endfor%}
                     </select><br>
                 </div>
             </div>

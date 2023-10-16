@@ -22,7 +22,8 @@ def get_usercomment():
         creation_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         write_db(name, phone, email, parking, comment, creation_date)
     comments = show_comments()
-    return render_template("./comment.html", comments=comments)
+    all_values, _ = get_parkinginfo()
+    return render_template("./comment.html", comments=comments, all_values=all_values)
 
 
 @app.route("/parkinginfo", methods=["GET", "POST"])
