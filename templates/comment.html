@@ -20,9 +20,9 @@
 
 
     <form id="form" class="box" action="" method="post">
-        <label class="label" for="name">姓名:</label>
+        <label class="label" for="name">姓名(可綽號):</label>
         <input class="input is-small" type="text" id="name" name="name" required><br>
-        <label class="label" for="phone">電話:</label>
+        <!-- <label class="label" for="phone">電話:</label>
         <input class="input is-small" type="tel" id="phone" name="phone" required><br>
         <label class="label" for="email">電子郵件:</label>
         <input class="input is-danger is-small" placeholder="Email input" value="e.g. alex@example.com" type="email"
@@ -32,27 +32,44 @@
             <div class="control">
                 <div class="select is-normal">
                     <select name="parking" id="parking">
-                        {% for value in all_values%}
+                        {% for value in all_values %}
                         <option value="{{ value[0]}}">{{value[0]}}</option>
-                        {% endfor%}
+                        {% endfor %}
                     </select><br>
                 </div>
             </div>
-        </div>
+        </div> -->
         <label for="comment">評論:</label>
         <textarea class="textarea is-success" placeholder="不超過50字" name="comment" id="comment" cols="30"
             rows="10"></textarea><br>
+        <label>綜合評分:</label><br>
+        <input type="radio" id="rating1" name="rating" value="1">
+        <label for="rating1">1 分</label>
+
+        <input type="radio" id="rating2" name="rating" value="2">
+        <label for="rating2">2 分</label>
+
+        <input type="radio" id="rating3" name="rating" value="3">
+        <label for="rating3">3 分</label>
+
+        <input type="radio" id="rating4" name="rating" value="4">
+        <label for="rating4">4 分</label>
+
+        <input type="radio" id="rating5" name="rating" value="5">
+        <label for="rating5">5 分</label>
         <button class="button is-link is-small" type="submit">提交</button> <button class="button is-warning is-small"
             is-smalltype="reset">清空</button>
     </form><br>
     <h2>評論:</h2>
     <ul>
+        <!-- main.py回傳的資料庫 -->
         {% for comment in comments %}
         <li>
             <strong>姓名:</strong> {{ comment[1] }}<br>
-            <strong>停車站:</strong> {{ comment[4] }}<br>
-            <strong>評論:</strong> {{ comment[5] }}<br>
-            <strong>評論時間:</strong> {{ comment[6] }}<br>
+            <strong>停車站:</strong> {{ comment[2] }}<br>
+            <strong>評論:</strong> {{ comment[4] }}<br>
+            <strong>綜合評分:</strong> {{ comment[3] }}<br>
+            <strong>評論時間:</strong> {{ comment[5] }}<br>
             <br>
         </li>
         {% endfor %}

@@ -1,16 +1,16 @@
 import sqlite3
 
 
+# 建立資料表
 def create_commentdb():
     sqlstr = """
     CREATE TABLE IF NOT EXISTS user_comment(
                     id INTEGER PRIMARY KEY,
                     name TEXT,
-                    phone TEXT,
-                    email TEXT,
                     park_site TEXT,
+                    rating INTEGER,
                     comment TEXT,
-                    datacreationdate DATETIME
+                    creation_date DATETIME
     )
     """
 
@@ -21,21 +21,27 @@ def create_commentdb():
     conn.close()
 
 
-def show_comments():
+# 顯示資料表
+def show_comments(park_site=None):
     conn = sqlite3.connect("comment_db.db")
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM user_comment")
+    # 不同站的評論點進來只顯示那個站的評論,所以帶參數一個回傳以篩選
+    if park_site is not None:
+        cursor.execute("SELECT * FROM user_comment WHERE park_site = ?", (park_site,))
+    else:
+        cursor.execute("SELECT * FROM user_comment")
     comments = cursor.fetchall()
     conn.close()
     return comments
 
 
-def write_db(name, phone, email, park_site, comment, creation_date):
+# 寫入資料表
+def write_db(name, park_site, comment, rating, creation_date):
     conn = sqlite3.connect("comment_db.db")
     cursor = conn.cursor()
     cursor.execute(
-        "INSERT INTO user_comment (name, phone, email, park_site, comment, datacreationdate) VALUES (?, ?, ?, ?, ?, ?)",
-        (name, phone, email, park_site, comment, creation_date),
+        "INSERT INTO user_comment (name, park_site, comment, rating, creation_date) VALUES (?, ?, ?, ?, ?)",
+        (name, park_site, comment, rating, creation_date),
     )
 
     conn.commit()

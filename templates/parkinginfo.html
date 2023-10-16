@@ -10,24 +10,27 @@
 
 <body>
     <a href="/">回首頁</a><br><br>
+    <!-- 下拉式選單 -->
     <form action="" method="post" id="sorting-form">
         <label for="sort">選擇排序方式(由高到低):</label>
         <select name="sort" id="sort">
             <option value="" selected>請選擇..</option>
+            <!-- 選完選項更新完頁面,選項保留在剛剛按的 -->
             <option value="carspace" {% if request.form.get('sort')=="carspace" %}selected{% endif %}>汽車剩餘車位</option>
             <option value="motspace" {% if request.form.get('sort')=="motspace" %}selected{% endif %}>機車剩餘車位</option>
         </select>
         <!-- <button type="submit">更新</button> -->
     </form><br><br>
+    <!-- 即時更新的時間,函式寫在main.js -->
     <span id="clock"></span>
     <div style="max-width: 80%; margin: 0 auto; text-align: center;">
-
-        <script></script>
         <h1>每分鐘更新一次</h1>
         <table class="table is-bordered">
             <thead>
                 <tr>
+                    <!-- 建立表格 -->
                     {% for column in columns %}
+                    <!-- 當選單選到該項目,使colums變紅標示清楚 -->
                     {% if request.form.get('sort')=="carspace" and loop.index==6 %}
                     <th style="color: red;font-weight: bolder;font-style: italic;">{{column}}</th>
                     {% elif request.form.get('sort')=="motspace" and loop.index==8 %}
@@ -39,12 +42,18 @@
                 </tr>
             </thead>
             <tbody>
+                <!-- main.py把all_values串列資料回傳做行資料 -->
                 {% for eachdata in all_values%}
                 <tr>
+                    <!-- 取每個元素一格格表格填入 -->
                     {% for data in eachdata %}
                     <td>
                         {% if loop.index==2 %}
+                        <!-- 按下即傳去google map搜尋地圖 -->
                         <a href="https://www.google.com/maps/search/{{data}}" target="_blank">{{data}}</a>
+                        {% elif loop.index==11 %}
+                        <!-- 按下即傳去評論頁面,後面帶停車站名 -->
+                        <a href="/comment/{{eachdata[0]}}">{{data}}</a>
                         {% else %}
                         {{data}}
                         {% endif %}
